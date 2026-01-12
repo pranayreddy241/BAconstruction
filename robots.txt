@@ -1,25 +1,4 @@
-# Allow all bots to crawl the site
 User-agent: *
-Allow: /
+Disallow:
 
-# Sitemap location
 Sitemap: https://bametalmoldingandconstruction.com/sitemap.xml
-
-# Disallow access to admin or private areas (if any)
-# User-agent: *
-# Disallow: /admin/
-# Disallow: /private/
-
-# Crawl-delay for specific bots (optional)
-# User-agent: Googlebot
-# Crawl-delay: 0
-
-# Allow access to CSS and JS files for better rendering
-User-agent: *
-Allow: /*.js
-Allow: /*.css
-Allow: /*.png
-Allow: /*.jpg
-Allow: /*.jpeg
-Allow: /*.gif
-Allow: /*.svg
