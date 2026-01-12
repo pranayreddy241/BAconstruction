@@ -31,6 +31,13 @@ Disallow:
 Sitemap: https://bametalmoldingandconstruction.com/sitemap.xml
 `);
 });
+app.use((req, res, next) => {
+  const host = req.headers.host || "";
+  if (host.startsWith("www.")) {
+    return res.redirect(301, `https://${host.replace("www.", "")}${req.url}`);
+  }
+  next();
+});
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
