@@ -1,12 +1,15 @@
 {
-    "name": "app",
-    "version": "1.0.0",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {      
-      "start": "node proxy.js"
-    },
-    "author": "",
-    "license": "MIT",
-    "description": "A wrapper for deploying to the GitHub runtime"
+  "name": "app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {      
+    "start": "node proxy.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "A wrapper for deploying to the GitHub runtime",
+  "dependencies": {
+    "express": "^4.18.3"
   }
+}
