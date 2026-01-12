@@ -8,29 +8,7 @@ const PORT = process.env.PORT || 10000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static files from project root
-app.use(express.static(__dirname));
-
-// Optional: serve robots/sitemap with correct types
-app.get("/robots.txt", (req, res) => {
-  res.type("text/plain");
-  res.sendFile(path.join(__dirname, "robots.txt"));
-});
-
-app.get("/sitemap.xml", (req, res) => {
-  res.type("application/xml");
-  res.sendFile(path.join(__dirname, "sitemap.xml"));
-});
-
-// ✅ SPA fallback (fixes /about, /services, /portfolio, etc.)
-app.get("/robots.txt", (req, res) => {
-  res.set("Content-Type", "text/plain");
-  res.status(200).send(`User-agent: *
-Disallow:
-
-Sitemap: https://bametalmoldingandconstruction.com/sitemap.xml
-`);
-});
+/** 1) Force canonical host (www -> non-www) BEFORE anything else */
 app.use((req, res, next) => {
   const host = req.headers.host || "";
   if (host.startsWith("www.")) {
@@ -39,6 +17,28 @@ app.use((req, res, next) => {
   next();
 });
 
+/** 2) Always serve robots.txt explicitly (no ambiguity) */
+app.get("/robots.txt", (req, res) => {
+  res.set("Content-Type", "text/plain");
+  res.status(200).send(
+`User-agent: *
+Disallow:
+
+Sitemap: https://bametalmoldingandconstruction.com/sitemap.xml
+`
+  );
+});
+
+/** 3) Serve sitemap.xml explicitly */
+app.get("/sitemap.xml", (req, res) => {
+  res.type("application/xml");
+  res.sendFile(path.join(__dirname, "sitemap.xml"));
+});
+
+/** 4) Serve static assets + index.html from repo root */
+app.use(express.static(__dirname));
+
+/** 5) SPA fallback (routes like /services, /portfolio, /about) */
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
