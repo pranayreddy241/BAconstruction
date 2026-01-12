@@ -1,3 +1,16 @@
+import express from "express";
+import path from "path";
+
+const app = express();
+
+app.use(express.static("dist")); // or "public" depending on your build
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("dist/index.html"));
+});
+
+app.listen(process.env.PORT || 3000);
+
+
 #!/usr/bin/env node
 import require$$1$2 from 'path';
 import require$$0$5 from 'tty';
