@@ -23,6 +23,15 @@ app.get("/sitemap.xml", (req, res) => {
 });
 
 // ✅ SPA fallback (fixes /about, /services, /portfolio, etc.)
+app.get("/robots.txt", (req, res) => {
+  res.set("Content-Type", "text/plain");
+  res.status(200).send(`User-agent: *
+Disallow:
+
+Sitemap: https://bametalmoldingandconstruction.com/sitemap.xml
+`);
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
